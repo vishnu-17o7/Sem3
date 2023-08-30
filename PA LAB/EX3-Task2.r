@@ -1,0 +1,8 @@
+y <- c(85, 74, 76, 90, 85, 87, 94, 98, 81, 91, 76, 74)
+x1 <- c(65, 50, 55, 65, 55, 70, 65, 70, 55, 70, 50, 55)
+x2 <- c(1, 7, 5, 2, 6, 3, 2, 5, 4, 3, 1, 4)
+input <- data.frame(y, x1, x2)
+model <- lm(y ~ x1 + x2, data <- input)
+print(summary(model))
+test <- data.frame(x1 <- 60, x2 <- 4)
+print(predict(model, test))
