@@ -11,39 +11,15 @@ class Vehicle {
         this.fuelType = fuelType;
     }
 
-    public String getMake() {
-        return make;
-    }
-
-    public String getModel() {
-        return model;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public String getFuelType() {
-        return fuelType;
-    }
-
     public double calculateFuelEfficiency() {
-        // Implement fuel efficiency calculation logic here
-        return 0.0;
-    }
-
-    public double calculateDistanceTraveled(double fuelConsumed) {
-        // Implement distance traveled calculation logic here
-        return 0.0;
+        return 25.0;
     }
 
     public int getMaxSpeed() {
-        // Implement maximum speed retrieval logic here
-        return 0;
+        return 120;
     }
 
-    @Override
-    public String toString() {
+    public String PrintDetails() {
         return "Make: " + make + ", Model: " + model + ", Year: " + year + ", Fuel Type: " + fuelType;
     }
 }
@@ -55,8 +31,10 @@ class Truck extends Vehicle {
         super(make, model, year, fuelType);
         this.cargoCapacity = cargoCapacity;
     }
+    public double getCargoCapcity() {
+        return cargoCapacity;
+    }
 
-    // Implement methods specific to trucks here
 }
 
 class Car extends Vehicle {
@@ -66,16 +44,15 @@ class Car extends Vehicle {
         super(make, model, year, fuelType);
         this.numberOfSeats = numberOfSeats;
     }
-
-    // Implement methods specific to cars here
+     public int getseats() {
+        return numberOfSeats;
+    }
 }
 
 class Motorcycle extends Vehicle {
     public Motorcycle(String make, String model, int year, String fuelType) {
         super(make, model, year, fuelType);
     }
-
-    // Implement methods specific to motorcycles here
 }
 
 public class Vehicles {
@@ -84,11 +61,9 @@ public class Vehicles {
         Car myCar = new Car("Toyota", "Camry", 2023, "Hybrid", 5);
         Motorcycle myMotorcycle = new Motorcycle("Harley-Davidson", "Sportster", 2021, "Gasoline");
 
-        System.out.println(" Truck: " + myTruck);
-        System.out.println(" Car: " + myCar);
-        System.out.println(" Motorcycle: " + myMotorcycle);
-
-        // You can call methods like calculateFuelEfficiency, calculateDistanceTraveled, and getMaxSpeed
-        // on the instances of these classes as needed.
+        System.out.println(" Truck: " + myTruck.PrintDetails()+"  Max Speed :"+myTruck.getMaxSpeed()+"  Fuel Efficiency :"+myTruck.calculateFuelEfficiency()+" Cargo Capacity :"+myTruck.getCargoCapcity());
+        System.out.println(" Car: " + myCar.PrintDetails()+"  Max Speed :"+myTruck.getMaxSpeed()+"  Fuel Efficiency :"+myCar.calculateFuelEfficiency()+" No of seats :"+myCar.getseats());
+        System.out.println(" Motorcycle: " + myMotorcycle.PrintDetails()+"  Max Speed :"+myTruck.getMaxSpeed()+"  Fuel Efficiency :"+myTruck.calculateFuelEfficiency());
+       // System.out.println("Car Fuel Efficiency: " + myCar.calculateFuelEfficiency() + " kpl");        
     }
 }
