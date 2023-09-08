@@ -1,4 +1,3 @@
-// Base class Sports
 class Sports {
     private String sportName;
     private int numberOfPlayers;
@@ -13,39 +12,35 @@ class Sports {
     }
 }
 
-// Subclass Football
+
 class Football extends Sports {
     public Football() {
-        super("Football", 11); // Football is typically played with 11 players.
+        super("Football", 11);
     }
 
-    @Override
     public void play() {
-        System.out.println("Kicking the ball in a game of Football with 11 players.");
+        System.out.println("Football is played with 11 players.");
     }
 }
 
-// Subclass Basketball
+
 class Basketball extends Sports {
     public Basketball() {
-        super("Basketball", 5); // Basketball is typically played with 5 players.
+        super("Basketball", 6);
     }
 
-    @Override
     public void play() {
-        System.out.println("Dribbling and shooting in a game of Basketball with 5 players.");
+        System.out.println("Basketball is played with 6 players.");
     }
 }
 
-// Subclass Rugby
 class Rugby extends Sports {
     public Rugby() {
-        super("Rugby", 15); // Rugby is typically played with 15 players.
+        super("Rugby", 15); 
     }
 
-    @Override
     public void play() {
-        System.out.println("Scrumming and tackling in a game of Rugby with 15 players.");
+        System.out.println("Rugby is played with 15 players.");
     }
 }
 
