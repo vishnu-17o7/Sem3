@@ -1,32 +1,50 @@
+import java.util.Scanner;
 abstract class Shape {
-
-    abstract double calculateArea();
-    abstract double calculatePerimeter();
+    abstract void calculateArea(Scanner s);
+    abstract void calculatePerimeter(Scanner s);
 
 }
-class Triangle extends Shape {
-    public double calculateArea()
+class Circle extends Shape {
+    public void calculateArea(Scanner s)
     {
-        System.out.println("IN triangle Area");
-        return 0.0;
+        System.out.printf("Enter the radius of the circle :");
+        double radius = s.nextDouble();
+        System.out.println("IN Circle Area :"+3.14*radius*radius);
     }
-
-}
-class Circle extends Shape{
-    public double calculateArea()
+     public void calculatePerimeter(Scanner s)
     {
-        System.out.println("IN Shape Area");
-        return 0.0;
-
+        System.out.printf("Enter the radius of the circle :");
+        double radius = s.nextDouble();
+        System.out.println("IN Circle Perimeter :"+2*3.14*radius);
+    }
+}
+class Triangle extends Shape{
+    public void calculateArea(Scanner s)
+    {
+        System.out.printf("Enter the breadth and height of the triangle :");
+        double breadth = s.nextDouble();
+        double height = s.nextDouble();
+        System.out.println("IN triangle Area :"+breadth*height*(0.5));
+    }
+     public void calculatePerimeter(Scanner s)
+    {
+        System.out.printf("Enter the sides of the triangle :");
+        double a = s.nextDouble();
+        double b = s.nextDouble();
+        double c = s.nextDouble();
+        System.out.println("IN triangle Perimeter :"+(a+b+c));
     }
 }
 class Abstraction extends Circle{
     public static void main(String[] a)
     {
-        double s,b;
+        Scanner s = new Scanner(System.in);
         Triangle t=new Triangle();
-        s=t.calculateArea();
+        t.calculateArea(s);
+        t.calculatePerimeter(s);
         Circle c= new Circle();
-        b=c.calculateArea();
+        c.calculateArea(s);
+        c.calculatePerimeter(s);
+        s.close();
     }
 }
