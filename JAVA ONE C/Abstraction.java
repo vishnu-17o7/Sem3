@@ -35,7 +35,7 @@ class Triangle extends Shape{
         System.out.println("IN triangle Perimeter :"+(a+b+c));
     }
 }
-class Abstraction extends Circle{
+class Abstraction{
     public static void main(String[] a)
     {
         Scanner s = new Scanner(System.in);

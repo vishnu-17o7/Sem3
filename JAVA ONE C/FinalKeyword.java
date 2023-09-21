@@ -25,9 +25,21 @@ class Car extends Vehicle {
     }
 }
 
+final class Vehicle1 {
+    final String carName = "FINAL CAR";
+
+    final void message() {
+        System.out.println("This is a final method.");
+    }
+}
+
 public class FinalKeyword {
     public static void main(String[] args) {
         Car myCar = new Car("Ford", 180);
         myCar.display();
+
+        Vehicle1 vehicle1 = new Vehicle1();
+        System.out.println("Car Name: " + vehicle1.carName);
+        vehicle1.message();
     }
 }

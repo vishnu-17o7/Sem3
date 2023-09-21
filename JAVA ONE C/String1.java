@@ -6,5 +6,6 @@ public class String1 {
             return;
         }
         System.out.printf("Equal");
+        return;
     }
 }
