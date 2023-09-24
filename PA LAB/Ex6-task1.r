@@ -16,4 +16,4 @@ cat("Forecasting Model : \n y - f", (sales - f), "\n\n\n(y - f)/y", (sales - f) 
 rmse <- sqrt(sum((sales - f)^2) / length(sales))
 mape <- (sum((sales - f) / sales) / length(sales)) * 100
 cat("\n\nRMSE : ", rmse, "MAPE :", mape)
-plot(sales, f, col=c("blue","red"))
+plot(sales, f, col = c("blue", "red"))
