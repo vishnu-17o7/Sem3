@@ -11,7 +11,7 @@ print(cubic_model)
 
 new_data <- data.frame(x = 3)
 predicted_time <- predict(quad_model, new_data)
-cat("Prediction Quad:", predicted_time,"\n")
+cat("Prediction Quad:", predicted_time, "\n")
 
 
 new_data <- data.frame(x = 38)

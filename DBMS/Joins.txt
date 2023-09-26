@@ -1,0 +1,267 @@
+mysql> -- 1. List the employees where salary is > 25000.
+mysql> SELECT * FROM employee WHERE salary > 25000;
++-------+---------+-------------+------------+--------+-------+-----+------+
+| empno | empname | designation | hiredate   | salary | comm  | dno | mgmr |
++-------+---------+-------------+------------+--------+-------+-----+------+
+|   102 | Vishnu  | Developer   | 2022-01-02 |  27500 |  2000 |   3 |    0 |
+|   107 | Reddy   | Sales       | 2022-01-02 |  55000 |  2000 |   1 |    0 |
+|   108 | Amrith  | Sales       | 2019-10-11 | 155000 | 21000 |   1 |    1 |
+|   110 | Vinoth  | Admin       | 2022-09-14 |  35000 | 10000 |   4 |    0 |
+|   111 | Varun   | Developer   | 2022-09-14 | 135000 | 30000 |   3 |    1 |
+|   113 | Saranya | Manager     | 2021-11-08 |  45000 |  1500 |   1 |    0 |
+|   114 | Senthil | Developer   | 2023-04-05 |  29000 |  1000 |   3 |    0 |
+|   115 | Shanthi | Designer    | 2022-09-17 |  32000 |   750 |   2 |    0 |
+|   116 | Vignesh | Analyst     | 2023-07-30 |  34000 |  1200 |   5 |    0 |
+|   117 | Yamini  | Developer   | 2023-02-28 |  27000 |   850 |   3 |    0 |
+|   118 | Aruna   | Manager     | 2021-07-22 |  47000 |  1700 |   1 |    0 |
+|   119 | Deepak  | Designer    | 2022-08-05 |  30000 |   700 |   2 |    0 |
+|   120 | Gowri   | Analyst     | 2023-05-12 |  31000 |  1050 |   5 |    0 |
+|   121 | Hari    | Developer   | 2023-01-10 |  26000 |   900 |   3 |    0 |
+|   122 | Arjun   | Security    | 2022-03-15 |  28000 |   800 |  10 |    1 |
+|   124 | Ganesh  | Research    | 1985-02-10 |  27000 |  1200 |   2 |    0 |
+|   125 | John    | Tester      | 2023-09-21 |  28000 |  1500 |   6 |    0 |
+|   126 | Singa   | Developer   | 2023-09-21 |  30000 |  1500 |   3 |    0 |
++-------+---------+-------------+------------+--------+-------+-----+------+
+18 rows in set (0.00 sec)
+
+mysql>
+mysql> -- 2. Display the employee details where job id is same as that of employee 74 (job id: 7499).
+mysql> SELECT * FROM employee WHERE designation = (SELECT designation FROM employee WHERE empno = 107);
++-------+---------+-------------+------------+--------+-------+-----+------+
+| empno | empname | designation | hiredate   | salary | comm  | dno | mgmr |
++-------+---------+-------------+------------+--------+-------+-----+------+
+|   107 | Reddy   | Sales       | 2022-01-02 |  55000 |  2000 |   1 |    0 |
+|   108 | Amrith  | Sales       | 2019-10-11 | 155000 | 21000 |   1 |    1 |
++-------+---------+-------------+------------+--------+-------+-----+------+
+2 rows in set (0.00 sec)
+
+mysql> -- 3. Display the employee details where job id is same as that of employee 7499 and whose salary is same or > employee 7782.
+mysql> SELECT * FROM employee WHERE designation = (SELECT designation FROM employee WHERE empno = 107) AND salary >= (SELECT salary FROM employee WHERE empno = 107);
++-------+---------+-------------+------------+--------+-------+-----+------+
+| empno | empname | designation | hiredate   | salary | comm  | dno | mgmr |
++-------+---------+-------------+------------+--------+-------+-----+------+
+|   107 | Reddy   | Sales       | 2022-01-02 |  55000 |  2000 |   1 |    0 |
+|   108 | Amrith  | Sales       | 2019-10-11 | 155000 | 21000 |   1 |    1 |
++-------+---------+-------------+------------+--------+-------+-----+------+
+2 rows in set (0.01 sec)
+
+mysql>
+mysql> -- 4. Display the name, job, and salary of the employee who gets the minimum salary.
+mysql> SELECT empname, designation, salary FROM employee WHERE salary = (SELECT MIN(salary) FROM employee);
++---------+-------------+--------+
+| empname | designation | salary |
++---------+-------------+--------+
+| Divya   | Research    |   2500 |
++---------+-------------+--------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> -- 5. Display the dept. and minimum salary of the department having the minimum salary > department 20.
+mysql> SELECT d.deptno, d.depname, MIN(e.salary) AS min_salary
+    ->      FROM dept d
+    ->      INNER JOIN employee e ON d.deptno = e.dno
+    ->      WHERE d.deptno < 20
+    ->      GROUP BY d.deptno, d.depname
+    ->      HAVING MIN(e.salary) > (SELECT MIN(salary) FROM employee WHERE deptno = 10);
++--------+----------+------------+
+| deptno | depname  | min_salary |
++--------+----------+------------+
+|     10 | Security |      28000 |
++--------+----------+------------+
+1 row in set (0.00 sec)
+
+mysql> -- 6. List the employees who get the minimum salary in each department.
+mysql> SELECT e.empno, e.empname, e.dno, e.salary
+    -> FROM employee e
+    -> WHERE (e.dno, e.salary) IN (SELECT dno, MIN(salary) FROM employee GROUP BY dno);
++-------+---------+-----+--------+
+| empno | empname | dno | salary |
++-------+---------+-----+--------+
+|   101 | Abi     |   3 |  25000 |
+|   104 | Hari    |   3 |  25000 |
+|   105 | Sarvesh |   3 |  25000 |
+|   109 | Pradeep |   4 |  15000 |
+|   113 | Saranya |   1 |  45000 |
+|   120 | Gowri   |   5 |  31000 |
+|   122 | Arjun   |  10 |  28000 |
+|   123 | Divya   |   2 |   2500 |
+|   125 | John    |   6 |  28000 |
++-------+---------+-----+--------+
+9 rows in set (0.00 sec)
+
+mysql>
+mysql> -- 7. List the employee details whose salary is less than that of the Analyst (job id: Analyst).
+mysql> SELECT * FROM employee WHERE salary < (SELECT salary FROM employee WHERE designation = 'Tester');
++-------+---------+-------------+------------+--------+-------+-----+------+
+| empno | empname | designation | hiredate   | salary | comm  | dno | mgmr |
++-------+---------+-------------+------------+--------+-------+-----+------+
+|   101 | Abi     | Developer   | 2000-10-11 |  25000 |  1000 |   3 |    0 |
+|   102 | Vishnu  | Developer   | 2022-01-02 |  27500 |  2000 |   3 |    0 |
+|   104 | Hari    | Developer   | 2022-01-02 |  25000 |  2000 |   3 |    0 |
+|   105 | Sarvesh | Developer   | 2022-01-02 |  25000 |  2000 |   3 |    0 |
+|   106 | Pranav  | Admin       | 2021-04-02 |  25000 |  2000 |   4 |    1 |
+|   109 | Pradeep | Admin       | 2022-09-14 |  15000 | 10000 |   4 |    0 |
+|   117 | Yamini  | Developer   | 2023-02-28 |  27000 |   850 |   3 |    0 |
+|   121 | Hari    | Developer   | 2023-01-10 |  26000 |   900 |   3 |    0 |
+|   123 | Divya   | Research    | 1980-09-20 |   2500 |  2000 |   2 |    0 |
+|   124 | Ganesh  | Research    | 1985-02-10 |  27000 |  1200 |   2 |    0 |
++-------+---------+-------------+------------+--------+-------+-----+------+
+10 rows in set (0.00 sec)
+mysql>
+
+mysql> -- 8. List the employee and their department name.
+mysql> SELECT e.empname, e.designation, d.depname
+    -> FROM employee e
+    -> JOIN dept d ON e.dno = d.deptno;
++---------+-------------+-----------+
+| empname | designation | depname   |
++---------+-------------+-----------+
+| Reddy   | Sales       | Sales     |
+| Amrith  | Sales       | Sales     |
+| Saranya | Manager     | Sales     |
+| Aruna   | Manager     | Sales     |
+| Shanthi | Designer    | Research  |
+| Deepak  | Designer    | Research  |
+| Divya   | Research    | Research  |
+| Ganesh  | Research    | Research  |
+| Abi     | Developer   | Developer |
+| Vishnu  | Developer   | Developer |
+| Hari    | Developer   | Developer |
+| Sarvesh | Developer   | Developer |
+| Varun   | Developer   | Developer |
+| Senthil | Developer   | Developer |
+| Yamini  | Developer   | Developer |
+| Hari    | Developer   | Developer |
+| Singa   | Developer   | Developer |
+| Pranav  | Admin       | Admin     |
+| Pradeep | Admin       | Admin     |
+| Vinoth  | Admin       | Admin     |
+| Vignesh | Analyst     | Analyst   |
+| Gowri   | Analyst     | Analyst   |
+| John    | Tester      | Developer |
+| Arjun   | Security    | Security  |
++---------+-------------+-----------+
+24 rows in set (0.00 sec)
+
+mysql>
+mysql> -- 9. List the employee details with their department.
+mysql> SELECT e.empno, e.empname, e.designation, e.salary, d.depname
+    -> FROM employee e
+    -> JOIN dept d ON e.dno = d.deptno;
++-------+---------+-------------+--------+-----------+
+| empno | empname | designation | salary | depname   |
++-------+---------+-------------+--------+-----------+
+|   107 | Reddy   | Sales       |  55000 | Sales     |
+|   108 | Amrith  | Sales       | 155000 | Sales     |
+|   113 | Saranya | Manager     |  45000 | Sales     |
+|   118 | Aruna   | Manager     |  47000 | Sales     |
+|   115 | Shanthi | Designer    |  32000 | Research  |
+|   119 | Deepak  | Designer    |  30000 | Research  |
+|   123 | Divya   | Research    |   2500 | Research  |
+|   124 | Ganesh  | Research    |  27000 | Research  |
+|   101 | Abi     | Developer   |  25000 | Developer |
+|   102 | Vishnu  | Developer   |  27500 | Developer |
+|   104 | Hari    | Developer   |  25000 | Developer |
+|   105 | Sarvesh | Developer   |  25000 | Developer |
+|   111 | Varun   | Developer   | 135000 | Developer |
+|   114 | Senthil | Developer   |  29000 | Developer |
+|   117 | Yamini  | Developer   |  27000 | Developer |
+|   121 | Hari    | Developer   |  26000 | Developer |
+|   126 | Singa   | Developer   |  30000 | Developer |
+|   106 | Pranav  | Admin       |  25000 | Admin     |
+|   109 | Pradeep | Admin       |  15000 | Admin     |
+|   110 | Vinoth  | Admin       |  35000 | Admin     |
+|   116 | Vignesh | Analyst     |  34000 | Analyst   |
+|   120 | Gowri   | Analyst     |  31000 | Analyst   |
+|   125 | John    | Tester      |  28000 | Developer |
+|   122 | Arjun   | Security    |  28000 | Security  |
++-------+---------+-------------+--------+-----------+
+24 rows in set (0.00 sec)
+
+mysql>
+mysql> -- 10. List the employees working under other employees (assuming "mgmr" is the manager ID).
+
+mysql> select empname from employee where mgmr <> 1;
++---------+
+| empname |
++---------+
+| Abi     |
+| Vishnu  |
+| Hari    |
+| Sarvesh |
+| Reddy   |
+| Pradeep |
+| Vinoth  |
+| Saranya |
+| Senthil |
+| Shanthi |
+| Vignesh |
+| Yamini  |
+| Aruna   |
+| Deepak  |
+| Gowri   |
+| Hari    |
+| Divya   |
+| Ganesh  |
+| John    |
+| Singa   |
++---------+
+20 rows in set (0.00 sec)
+
+mysql>
+mysql> -- 11. List the names and grades of employees where (assuming grades are not provided in the current data).
+mysql> select empname from employee;
++---------+
+| empname |
++---------+
+| Abi     |
+| Vishnu  |
+| Hari    |
+| Sarvesh |
+| Pranav  |
+| Reddy   |
+| Amrith  |
+| Pradeep |
+| Vinoth  |
+| Varun   |
+| Saranya |
+| Senthil |
+| Shanthi |
+| Vignesh |
+| Yamini  |
+| Aruna   |
+| Deepak  |
+| Gowri   |
+| Hari    |
+| Arjun   |
+| Divya   |
+| Ganesh  |
+| John    |
+| Singa   |
++---------+
+24 rows in set (0.00 sec)
+mysql>
+mysql> -- 12. List the employee with the second minimum salary.
+mysql> SELECT empname, salary
+    -> FROM employee
+    -> ORDER BY salary ASC
+    -> LIMIT 1 OFFSET 1;
++---------+--------+
+| empname | salary |
++---------+--------+
+| Pradeep |  15000 |
++---------+--------+
+1 row in set (0.00 sec)
+
+mysql>
+mysql> -- 13. List the employees belonging to the department of Miller (assuming 'Miller' is a depname).
+mysql> SELECT e.empname
+    ->      FROM employee e
+    ->      JOIN dept d ON e.dno = d.deptno
+    ->      WHERE d.depname = "Tester";
++---------+
+| empname |
++---------+
+| John    |
++---------+
+1 row in set (0.00 sec)
