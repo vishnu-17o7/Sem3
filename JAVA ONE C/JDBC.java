@@ -30,7 +30,7 @@ public static void main(String[] args) throws ClassNotFoundException {
 				int id = result.getInt("id");
 				String name = result.getString("name");
 				String role = result.getString("role");
-
+				
 				System.out.print(id + "\t" + name + "\t" + role + "\n");
 			}
 		}
