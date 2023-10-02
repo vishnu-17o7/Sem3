@@ -17,8 +17,6 @@ def randsoln(tsp):
     print("Random Route Length:", routelength(tsp, solution))
     return solution
 
-
-
 def getneighbors(solution):
     neighbors = []
     for i in range(len(solution)):
