@@ -19,7 +19,7 @@ public static void main(String[] args) throws ClassNotFoundException {
 	String sql = "SELECT * FROM employees";
 
 	try {
-		Class.forName("com.mysql.cj.jdbc.Driver");
+		Class.forName("com.mysql.jdbc.Driver");
 
 		try (Connection connection = DriverManager.getConnection(DB_URL, DB_USER, DB_PASSWORD);
 			 Statement statement = connection.createStatement();
