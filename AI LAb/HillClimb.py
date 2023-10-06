@@ -2,8 +2,11 @@ import random
 
 def routelength(tsp, solution):
     routelen = 0
+    #routelen += tsp[solution[-1]][solution[0]]
+    #print("\nRoute Length:", routelen)
     for i in range(len(solution)):
         routelen += tsp[solution[i - 1]][solution[i]]
+    #print("\nRoute Length:", routelen)
     return routelen
 
 def randsoln(tsp):
@@ -52,9 +55,9 @@ def hillclimb(tsp):
 
 tsp = [
     [0, 400, 500, 300],
-    [400, 0, 200, 200],
-    [500, 200, 0, 100],
-    [300, 200, 100, 0]
+    [400, 0, 300, 500],
+    [500, 300, 0, 400],
+    [300, 500, 400, 0]
 ]
 
 best_solution, best_length = hillclimb(tsp)

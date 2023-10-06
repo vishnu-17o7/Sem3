@@ -28,6 +28,7 @@ def astar(start, goal):
             if f_scores[node] < min_f_score:
                 min_f_score = f_scores[node]
                 current = node
+        #current = min(opened, key=lambda node: f_scores[node])
 
         if current == goal:
             
@@ -42,6 +43,7 @@ def astar(start, goal):
         closed.add(current)
 
         for neighbor, cost in graph[current].items():
+            #print("Current :", graph[current].items())
             if neighbor in closed:
                 continue
 

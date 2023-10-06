@@ -6,3 +6,9 @@ x4 <- c(55.66, 63.97, 45.32, 46.67, 41.21, 43.83, 41.61, 64.57, 42.41, 57.95, 57
 input <- data.frame(y, x1, x2, x3, x4)
 model <- lm(y ~ x1 + x2 + x3 + x4, data <- input)
 print(model)
+b0 <- coef(model)[1]
+b1 <- coef(model)[2]
+b2 <- coef(model)[3]
+b3 <- coef(model)[4]
+b4 <- coef(model)[5]
+cat("b0 = ", b0, "\n", "b1 = ", b1, "\n", "b2 = ", b2, "\n", "b3 = ", b3, "\n", "b4 = ", b4, "\n")

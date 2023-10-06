@@ -17,14 +17,22 @@ def Cost(H, condition, weight = 1):
 # Update the cost
 def update_cost(H, Conditions, weight=1):
 	Main_nodes = list(Conditions.keys())
+	print('Main Nodes :', Main_nodes)
 	Main_nodes.reverse()
 	least_cost= {}
 	for key in Main_nodes:
 		condition = Conditions[key]
+		#print("\nCondition for", key,':', condition)
 		print(key,':', Conditions[key],'>>>', Cost(H, condition, weight))
 		c = Cost(H, condition, weight)
+		print("C :",c)
 		H[key] = min(c.values())
-		least_cost[key] = Cost(H, condition, weight)		
+		print("Minimum Cost :", H[key])
+		least_cost[key] = Cost(H, condition, weight)
+		#print("Least Cost :", least_cost[key])
+
+	print("Least Cost :", least_cost)
+	print("Updated Cost :", H)
 	return least_cost
 
 # Print the shortest path
@@ -32,6 +40,7 @@ def shortest_path(Start,Updated_cost, H):
 	Path = Start
 	if Start in Updated_cost.keys():
 		Min_cost = min(Updated_cost[Start].values())
+		print("Min Cost :", Min_cost)
 		key = list(Updated_cost[Start].keys())
 		values = list(Updated_cost[Start].values())
 		Index = values.index(Min_cost)
@@ -61,10 +70,9 @@ H = {'S': 0,'A': 7, 'B': 12, 'C': 13, 'D': 5, 'E': 6, 'F': 5, 'G': 7, 'H': 2}
 
 Conditions = {
 'S': {'OR': ['C'], 'AND': ['A', 'B']},
-'A': {'AND': ['D', 'E']},
+'A': {'OR': ['D', 'E']},
 'C': {'AND': ['F','G']},
 'D': {'OR' : ['H']}
-
 }
 # weight
 weight = 1
