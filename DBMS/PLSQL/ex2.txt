@@ -1,0 +1,8 @@
+declare 
+	cursor employee is select name, salary from employee where salary = (select max(salary) from employee);
+begin 
+	for i in employee loop
+		dbms_output.put_line(i.name ||'		'|| i.salary);
+	end loop;
+end;
+/

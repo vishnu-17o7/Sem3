@@ -1,0 +1,131 @@
+1.DML commands
+
+DECLARE
+   v_employee_id NUMBER := 1;
+   v_new_salary   NUMBER := 50000;
+BEGIN
+   -- Update operation
+   UPDATE employee
+   SET salary = v_new_salary
+   WHERE empid = v_employee_id;
+
+   -- Delete operation
+   DELETE FROM employee
+   WHERE empid = 3;
+
+   COMMIT;
+END;
+/
+
+PL/SQL procedure successfully completed.
+
+
+2.factorial
+
+DECLARE
+   v_number NUMBER := 5;
+   v_factorial NUMBER := 1;
+BEGIN
+   FOR i IN 1..v_number LOOP
+      v_factorial := v_factorial * i;
+   END LOOP;
+   
+   DBMS_OUTPUT.PUT_LINE('Factorial of ' || v_number || ' is ' || v_factorial);
+END;
+/
+
+Factorial of 5 is 120
+
+
+3.Fibbo
+
+DECLARE
+   v_limit NUMBER := 100;
+   v_prev NUMBER := 0;
+   v_curr NUMBER := 1;
+   v_next NUMBER;
+BEGIN
+   DBMS_OUTPUT.PUT_LINE(v_prev);
+   DBMS_OUTPUT.PUT_LINE(v_curr);
+   
+   WHILE (v_curr + v_prev) <= v_limit LOOP
+      v_next := v_curr + v_prev;
+      DBMS_OUTPUT.PUT_LINE(v_next);
+      v_prev := v_curr;
+      v_curr := v_next;
+   END LOOP;
+END;
+/
+
+0
+1
+1
+2
+3
+5
+8
+13
+21
+34
+55
+89
+
+4.prime nums upto n
+
+DECLARE
+   v_limit NUMBER := 50;
+   v_is_prime BOOLEAN;
+BEGIN
+   FOR i IN 2..v_limit LOOP
+      v_is_prime := TRUE;
+      
+      FOR j IN 2..SQRT(i) LOOP
+         IF (MOD(i, j) = 0) THEN
+            v_is_prime := FALSE;
+            EXIT;
+         END IF;
+      END LOOP;
+      
+      IF v_is_prime THEN
+         DBMS_OUTPUT.PUT_LINE(i);
+      END IF;
+   END LOOP;
+END;
+/
+
+2
+3
+5
+7
+11
+13
+17
+19
+23
+29
+31
+37
+41
+43
+47
+
+5. reverse a given num
+
+DECLARE
+   v_number NUMBER := 12345;
+   v_reversed_number NUMBER := 0;
+   v_temp NUMBER := v_number;
+BEGIN
+   WHILE v_temp > 0 LOOP
+      v_reversed_number := (v_reversed_number * 10) + MOD(v_temp, 10);
+      v_temp := TRUNC(v_temp / 10);
+   END LOOP;
+   
+   DBMS_OUTPUT.PUT_LINE('Original Number: ' || v_number);
+   DBMS_OUTPUT.PUT_LINE('Reversed Number: ' || v_reversed_number);
+END;
+/
+
+Original Number: 12345
+Reversed Number: 54321
+

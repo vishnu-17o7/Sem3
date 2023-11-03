@@ -1,0 +1,71 @@
+DECLARE
+   dividend NUMBER;
+   divisor NUMBER;
+   result NUMBER;
+Begin
+      dividend := &dividend;
+      divisor := &divisor;
+      result := dividend / divisor;
+   EXCEPTION
+      WHEN ZERO_DIVIDE THEN
+         DBMS_OUTPUT.PUT_LINE('Exception: Division by zero is not allowed.');
+END;
+/
+12
+0
+
+
+
+
+
+DECLARE
+   emp_id NUMBER;
+   Name employee.name%TYPE;
+BEGIN
+      emp_id := &emp_id;
+      BEgin
+      SELECT name INTO Name
+      FROM employee
+      WHERE empid = emp_id;
+
+      DBMS_OUTPUT.PUT_LINE('Valid Employee: ' || name);
+   EXCEPTION
+      WHEN NO_DATA_FOUND THEN
+         DBMS_OUTPUT.PUT_LINE('Exception: Invalid Employee ID ' || emp_id);
+   END;
+
+   -- Rest of the code
+   -- You can continue with your program here
+END;
+/
+
+
+
+
+
+DECLARE
+   v_mark1 NUMBER ;
+   v_mark2 NUMBER ;
+   v_mark3 NUMBER ;
+   v_best_mark NUMBER;
+   v_average NUMBER;
+BEGIN
+   v_mark1 := &vmark1;
+   v_mark2 := &vmark2;
+   v_mark3 := &vmark3;
+   -- Find the best of 2 marks
+   IF v_mark1 >= v_mark2 AND v_mark1 >= v_mark3 THEN
+      v_best_mark := GREATEST(v_mark2, v_mark3);
+   ELSIF v_mark2 >= v_mark1 AND v_mark2 >= v_mark3 THEN
+      v_best_mark := GREATEST(v_mark1, v_mark3);
+   ELSE
+      v_best_mark := GREATEST(v_mark1, v_mark2);
+   END IF;
+
+   -- Calculate the average
+   v_average := (v_mark1 + v_mark2 + v_mark3 - v_best_mark) / 2;
+
+   DBMS_OUTPUT.PUT_LINE('Best Mark among 2: ' || v_best_mark);
+   DBMS_OUTPUT.PUT_LINE('Average of 3 Marks: ' || v_average);
+END;
+/
