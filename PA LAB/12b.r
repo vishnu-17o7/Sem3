@@ -12,4 +12,15 @@ print(y1)
 print(y2)
 print("---POPULATION PROPORTION---")
 print(eigen_value[1] / sum(eigen_value))
-plot(c(1:2), eigen_value, pch = 16, type = "o", main = "SCREE PLOT")
+eigen_value <- data.frame(
+  PC = c(1, 2),
+  Eigenvalue = eigen_value
+)
+ggplot(eigen_value, aes(x = PC, y = Eigenvalue)) +
+  geom_point(shape = 16) +
+  geom_line() +
+  labs(
+    x = "Principal Component",
+    y = "Eigenvalue",
+    title = "Scree Plot"
+  )
