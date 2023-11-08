@@ -8,13 +8,12 @@ Begin
       result := dividend / divisor;
    EXCEPTION
       WHEN ZERO_DIVIDE THEN
+         DBMS_OUTPUT.PUT_LINE('');	 
          DBMS_OUTPUT.PUT_LINE('Exception: Division by zero is not allowed.');
 END;
 /
 12
 0
-
-
 
 
 

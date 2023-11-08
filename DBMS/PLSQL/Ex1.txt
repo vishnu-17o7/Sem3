@@ -112,7 +112,7 @@ END;
 5. reverse a given num
 
 DECLARE
-   v_number NUMBER := 12345;
+   v_number NUMBER := 0987654321;
    v_reversed_number NUMBER := 0;
    v_temp NUMBER := v_number;
 BEGIN

@@ -1,0 +1,135 @@
+1)
+SET SERVEROUTPUT ON
+DECLARE
+	num INT;
+	f INT;
+PROCEDURE findFactorial(n IN INT,fact OUT INT) IS
+BEGIN
+	fact:=1;
+	FOR i IN 1..n LOOP
+		fact:=fact*i;
+	END LOOP;
+END;
+BEGIN
+	num:=&num;
+	findFactorial(num,f);
+	DBMS_OUTPUT.PUT_LINE('Factorial of '||num||'is '||f);
+END;
+/
+
+Enter value for num: 6
+old  12:        num:=&num;
+new  12:        num:=6;
+Factorial of 6is 720
+PL/SQL procedure successfully completed.
+
+2)
+SET SERVEROUTPUT ON
+DECLARE
+	ename employee.NAME%type;
+	salary employee.SALARY%type;
+PROCEDURE getSalary IS
+BEGIN
+	ename:=&ename;
+	SELECT salary into salary from employee where name=ename;
+	DBMS_OUTPUT.PUT_LINE('SALARY OF '||ename||' is Rs.'||salary);
+END;
+BEGIN
+	getSalary;
+END;
+/
+
+3)
+SET SERVEROUTPUT ON
+CREATE OR REPLACE FUNCTION checkPerfectNumber(n INT) RETURN BOOLEAN IS
+    div_sum INT:=0;
+BEGIN
+    FOR i IN 1..n/2 LOOP
+        IF n MOD i = 0 THEN
+            div_sum:=div_sum+i;
+        END IF;
+    END LOOP;
+    IF div_sum = n THEN
+        RETURN TRUE;
+    ELSE
+        RETURN FALSE;
+    END IF;
+END checkPerfectNumber;
+/
+DECLARE
+    num INT;
+    result BOOLEAN;
+BEGIN
+	num:=&num;
+    result:=checkPerfectNumber(num);
+    IF result THEN
+        DBMS_OUTPUT.PUT_LINE(num||' is a perfect number.');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE(num||' is not a perfect number.');
+    END IF;
+END;
+/
+
+Enter value for num: 6
+old   5:        num:=&num;
+new   5:        num:=6;
+6 is a perfect number.
+
+4)
+SET SERVEROUTPUT ON
+CREATE OR REPLACE FUNCTION calcTotal(m1 IN INT, m2 IN INT, m3 IN INT) RETURN INT IS 
+	total INT := 0;
+BEGIN
+	total := m1 + m2 + m3;
+	RETURN total;
+END;
+/
+
+CREATE OR REPLACE FUNCTION calcAverage(total IN INT) RETURN NUMBER IS 
+	avg1 NUMBER(4, 2);
+BEGIN
+	avg1 := total / 3.0;
+	RETURN avg1;
+END;
+/
+
+CREATE OR REPLACE FUNCTION calcGrade(avg1 IN NUMBER) RETURN VARCHAR2 IS 
+	grade VARCHAR2(4);
+BEGIN
+	IF avg1 >= 90 THEN
+		grade := 'O';
+	ELSIF avg1 >= 80 THEN
+		grade := 'A';
+	ELSIF avg1 >= 70 THEN
+		grade := 'B';
+	ELSIF avg1 >= 60 THEN
+		grade := 'C';
+	ELSIF avg1 >= 50 THEN
+		grade := 'D';
+	ELSE
+		grade := 'Fail';
+	END IF;
+	RETURN grade;
+END;
+/
+
+SET SERVEROUTPUT ON
+DECLARE 
+	m1 INT;
+	m2 INT;
+	m3 INT;
+	tot INT;
+	avg1 NUMBER(4, 2);
+	grade VARCHAR2(5);
+BEGIN
+	m1 := &m1;
+	m2 := &m2;
+	m3 := &m3;
+	tot := calcTotal(m1, m2, m3);
+	avg1 := calcAverage(tot);
+	grade := calcGrade(avg1);
+	DBMS_OUTPUT.PUT_LINE('TOTAL: ' || tot || '/300');
+	DBMS_OUTPUT.PUT_LINE('AVERAGE: ' || avg1);
+	DBMS_OUTPUT.PUT_LINE('GRADE: ' || grade);
+END;
+/
