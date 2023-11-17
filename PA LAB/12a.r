@@ -17,7 +17,7 @@ print(y1)
 print(y2)
 print(y3)
 print("---POPULATION PROPORTION---")
-print(eigen_value[1] / sum(eigen_value))
+print(eigen_value / sum(eigen_value))
 eigen_value <- data.frame(
   PC = c(1, 2, 3),
   Eigenvalue = eigen_value
