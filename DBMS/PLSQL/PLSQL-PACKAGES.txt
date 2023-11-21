@@ -1,0 +1,78 @@
+1)
+
+CREATE OR REPLACE PACKAGE emp_package AS 
+   PROCEDURE hireEmployee(id employee.empid%type,name employee.name%type,sal employee.salary%type); 
+   PROCEDURE fireEmployee(id employee.empid%type); 
+   PROCEDURE listEmployee; 
+END emp_package; 
+/
+
+CREATE OR REPLACE PACKAGE BODY emp_package AS
+
+   PROCEDURE hireEmployee(id  employee.empid%type, name  employee.name%type, sal  employee.salary%type) IS
+   BEGIN
+      INSERT INTO employee VALUES (id, name, sal);
+   END hireEmployee;
+
+   PROCEDURE fireEmployee(id  employee.empid%type) IS
+   BEGIN
+      DELETE FROM employee WHERE empid = id;
+   END fireEmployee;
+
+   PROCEDURE listEmployee IS
+      name employee.name%TYPE;
+   BEGIN
+      FOR i IN (SELECT name FROM employee) LOOP
+         DBMS_OUTPUT.PUT_LINE(i.name);
+      END LOOP;
+   END listEmployee;
+
+END emp_package;
+/
+
+SET SERVEROUTPUT ON
+BEGIN 
+   emp_package.hireEmployee(6,'AkshayKrishna',45000); 
+   emp_package.hireEmployee(7,'AkshayRoopan',32134); 
+   emp_package.listEmployee; 
+   emp_package.fireEmployee(4); 
+   emp_package.listEmployee; 
+END; 
+/ 
+
+2)
+
+CREATE PACKAGE area_package AS 
+   FUNCTION findArea(a int) RETURN int; 
+   FUNCTION findArea(a int,b int) RETURN int; 
+END area_package; 
+/
+
+CREATE PACKAGE BODY area_package AS
+
+	FUNCTION findArea(a int) RETURN int IS
+		BEGIN 
+			RETURN a*a;
+		END findArea;
+	
+	FUNCTION findArea(a int,b INT) RETURN int IS
+		BEGIN 
+			RETURN a*b;
+		END findArea;
+
+END area_package;
+/
+
+SET SERVEROUTPUT ON
+DECLARE
+	area int;
+BEGIN
+	area:=area_package.findArea(4);
+	DBMS_OUTPUT.PUT_LINE('Area of Square is '||area||' sq.units');
+	area:=area_package.findArea(4,2);
+	DBMS_OUTPUT.PUT_LINE('Area of Rectangle is '||area||' sq.units');
+END;
+/
+
+Area of Square is 16 sq.units
+Area of Rectangle is 8 sq.units
