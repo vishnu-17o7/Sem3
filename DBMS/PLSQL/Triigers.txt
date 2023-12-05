@@ -1,0 +1,27 @@
+1.
+
+CREATE OR REPLACE TRIGGER prevent_dml_employee
+BEFORE INSERT OR UPDATE OR DELETE
+ON employee
+BEGIN
+  -- Add debugging information to identify the point of failure
+  DBMS_OUTPUT.PUT_LINE('Trigger is executing.');
+
+  -- Your existing trigger logic
+  RAISE_APPLICATION_ERROR(-20001, 'DML operations are restricted on the employee table.');
+END;
+/
+
+
+2.
+
+CREATE OR REPLACE TRIGGER prevent_updates_on_sundays
+BEFORE UPDATE
+ON employee
+FOR EACH ROW
+BEGIN
+  IF TO_CHAR(SYSDATE, 'DY') = 'SUN' THEN
+    RAISE_APPLICATION_ERROR(-20002, 'Updates are not allowed on Sundays.');
+  END IF;
+END;
+/

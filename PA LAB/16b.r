@@ -1,0 +1,5 @@
+library("psych")
+library("GPArotation")
+parallel <- fa.parallel(bfi, fm = "minres", fa = "fa")
+factors <- fa(bfi, nfactors = 2, rotate = "oblimin", fm = "minres")
+print(factors)
