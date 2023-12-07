@@ -44,7 +44,7 @@ def minimax(b, depth, isMax, player, opponent):
         for i in range(3):
             for j in range(3):
                 if b[i][j] == '_':
-                    b[i][j] = player
+                    b[i][j] = opponent
                     best = max(best, minimax(b, depth + 1, not isMax, player, opponent))
                     #print(best)
                     b[i][j] = '_'
@@ -54,7 +54,7 @@ def minimax(b, depth, isMax, player, opponent):
         for i in range(3):
             for j in range(3):
                 if b[i][j] == '_':
-                    b[i][j] = opponent
+                    b[i][j] = player
                     best = min(best, minimax(b, depth + 1, not isMax, player, opponent))
                     #print(best)
                     b[i][j] = '_'
@@ -67,6 +67,7 @@ def findBestMove(b, player, opponent):
         for j in range(3):
             if b[i][j] == '_':
                 b[i][j] = player
+                #printBoard(b)
                 moveVal = minimax(b, 0, False, player, opponent)
                 b[i][j] = '_'
                 if moveVal > bestVal:
